@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="rol")
-public class Rol implements Serializable {
+public class Roles implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,6 +22,6 @@ public class Rol implements Serializable {
     @NotBlank(message = "El rol no puede estar vacío.")
     private String nombreRol; // ADMIN, CLIENTE
 
-    @OneToMany(mappedBy = "rol")
-    private List<Usuario> usuarios;
+    @OneToMany(mappedBy = "roles")
+    private List<Usuarios> usuarios;
 }
