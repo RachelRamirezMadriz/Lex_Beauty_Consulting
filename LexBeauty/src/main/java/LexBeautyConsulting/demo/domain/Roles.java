@@ -20,7 +20,7 @@ public class Roles implements Serializable {
 
     @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
     @NotBlank(message = "El rol no puede estar vacío.")
-    private String nombreRol; // ADMIN, CLIENTE
+    private String nombreRol; // 2 roles ROLE_ADMIN y ROLE_CLIENTE
 
     @OneToMany(mappedBy = "roles")
     private List<Usuarios> usuarios;
