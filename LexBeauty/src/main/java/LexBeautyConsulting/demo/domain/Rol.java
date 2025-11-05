@@ -18,10 +18,10 @@ public class Rol implements Serializable {
     @Column(name="id_rol")
     private Integer idRol;
 
-    @Column(name = "nombre_rol", nullable = false, unique = true, length = 35)
+    @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
     @NotBlank(message = "El rol no puede estar vacío.")
     private String nombreRol; // ADMIN, CLIENTE
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;
 }
