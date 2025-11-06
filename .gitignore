@@ -23,3 +23,5 @@
 hs_err_pid*
 replay_pid*
 LexBeauty/src/main/resources/firebase/lexbeautyconsulting-e3929-firebase-adminsdk-fbsvc-65bcbafa5f.json
+.idea
+.vscode
