@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+
+-->
+<html>
 <head>
+    <title>Sobre Nosotros</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" th:href="@{/img/Logos/Favicon.png}">
 </head>
 <body>
+<div th:replace="~{general/fragmentos :: header}"></div>
+<div th:replace="nosotros/fragmentos :: nosotros"></div>
 
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
 </body>
 </html>
+

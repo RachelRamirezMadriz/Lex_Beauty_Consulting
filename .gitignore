@@ -25,3 +25,16 @@ replay_pid*
 LexBeauty/src/main/resources/firebase/lexbeautyconsulting-e3929-firebase-adminsdk-fbsvc-65bcbafa5f.json
 .idea
 .vscode
+
+### Firebase ###
+
+firebase/
+
+###application.properties###
+
+src/main/resources/application.properties
+
+###applicatio properties###
+
+src/main/resources/application.properties
+
