@@ -33,7 +33,7 @@ public class ProjectConfig implements WebMvcConfigurer{
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/").setViewName("index");
-//    }
+//    } Se trabaja ahora en el IndexController
     
     /*Configuracion de Thymeleaf*/
     @Bean
