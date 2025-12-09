@@ -30,10 +30,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 public class ProjectConfig implements WebMvcConfigurer{
     
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/").setViewName("index");
-//    } Se trabaja ahora en el IndexController
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");
+        /*Listo para generar otras vistas*/
+    }
     
     /*Configuracion de Thymeleaf*/
     @Bean
@@ -66,11 +67,8 @@ public class ProjectConfig implements WebMvcConfigurer{
     @Bean
     public SecurityFilterChain sfc (HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                        "/", "/login", "/registro/**", "/ingresar/**",
-                        "/index", "/nosotros/**", "/contacto/**",
-                        "/categoria/**", "/producto/**",
-                        "/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
+                .requestMatchers("/", "/registro/**", "/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
+                .requestMatchers("/nosotros", "/categoria/**", "/producto/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/cliente/**").hasRole("CLIENTE")
                 .anyRequest().authenticated()

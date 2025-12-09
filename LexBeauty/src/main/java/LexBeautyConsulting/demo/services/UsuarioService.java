@@ -8,10 +8,14 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
+
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 @Service
 public class UsuarioService implements UserDetailsService {
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -22,13 +26,14 @@ public class UsuarioService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
-        // Busca el email en la BD
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Usuarios u = usuarioRepository.findByEmail(email).orElse(null);
-        // En caso de que no exista el correo
-        if (u == null){
+
+        if (u == null) {
             throw new UsernameNotFoundException("El correo electrónico " + email + " no existe en el sistema.");
         }
+
         return withUsername(u.getEmail())
                 .password(u.getPassword())
                 .authorities(u.getRoles().getNombreRol())
@@ -36,19 +41,17 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveClientes(Usuarios u){
-        if (usuarioRepository.existsByEmail(u.getEmail())){
+    public void saveClientes(Usuarios u) {
+        if (usuarioRepository.existsByEmail(u.getEmail())) {
             throw new IllegalStateException("El correo electrónico ya existe en el sistema.");
         }
-        // ENCRIPTADO con BCRYPT
         u.setPassword(passwordEncoder.encode(u.getPassword()));
-        // Rol (Cliente)
         u.setRoles(rolRepository.findByNombreRol("ROLE_CLIENTE"));
         usuarioRepository.save(u);
     }
 
-    public void saveAdministrador(Usuarios u){
-        if (usuarioRepository.existsByEmail(u.getEmail())){
+    public void saveAdministrador(Usuarios u) {
+        if (usuarioRepository.existsByEmail(u.getEmail())) {
             throw new IllegalArgumentException("El correo electrónico ya existe en el sistema.");
         }
         u.setPassword(passwordEncoder.encode(u.getPassword()));
@@ -56,7 +59,7 @@ public class UsuarioService implements UserDetailsService {
         usuarioRepository.save(u);
     }
 
-    public Usuarios findByEmail(String email){
-        return usuarioRepository.findByEmail(email).orElse(null);
+    public Optional<Usuarios> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 }
