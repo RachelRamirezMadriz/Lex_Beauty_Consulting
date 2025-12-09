@@ -14,41 +14,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class RegistroController {
-    @Autowired
+
+    @Autowired 
     private UsuarioService usuarioService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registro")
-    public String registro(Model model) {
+    public String mostrarFormulario(Model model) {
         model.addAttribute("usuario", new Usuarios());
         return "registro/listado";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "ingresar/listado";
-    }
-
     @PostMapping("/registro")
-    public String registrarUsuario(@Valid @ModelAttribute ("Usuario")Usuarios u,
+    public String registrarUsuario(@Valid @ModelAttribute("usuario") Usuarios usuario,
                                    BindingResult resultado,
                                    Model model) {
+
         if (resultado.hasErrors()) {
             return "registro/listado";
         }
 
-        // En caso de que exista el correo
-        if (usuarioService.findByEmail(u.getEmail()) != null) {
+        if (usuarioService.findByEmail(usuario.getEmail()) != null) {
             resultado.rejectValue("email", "email.existencia", "Este correo ya existe");
             return "registro/listado";
         }
 
-        u.setPassword(passwordEncoder.encode(u.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuarioService.saveClientes(usuario);
 
-        usuarioService.saveClientes(u);
         return "redirect:/login";
     }
-
 }

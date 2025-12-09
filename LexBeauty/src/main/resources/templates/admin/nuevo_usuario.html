@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registro</title>
+    <title>Nuevo Usuario (Admin)</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
@@ -13,14 +13,14 @@
 <!-- Header -->
 <div th:replace="~{general/fragmentos :: header}"></div>
 
-<!-- Contenido Registro -->
+<!-- Contenido Formulario Admin -->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card p-4 shadow-sm">
-                <h3 class="card-title text-center mb-4">Registro de Clientes</h3>
+                <h3 class="card-title text-center mb-4">Crear Usuario</h3>
 
-                <form th:action="@{/registro}" th:object="${usuario}" method="post">
+                <form th:action="@{/admin/usuarios/nuevo}" th:object="${usuario}" method="post">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" id="nombre" class="form-control" th:field="*{nombre}">
@@ -39,11 +39,20 @@
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                    <div class="mb-3">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select id="rol" class="form-select" th:field="*{rol}">
+                            <option value="CLIENTE">Cliente</option>
+                            <option value="VENDEDOR">Vendedor</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Crear Usuario</button>
                 </form>
 
                 <p class="text-center mt-3">
-                    ¿Ya tienes cuenta? <a th:href="@{/login}">Iniciar sesión</a>
+                    <a th:href="@{/admin/usuarios}">Volver a la lista de usuarios</a>
                 </p>
             </div>
         </div>

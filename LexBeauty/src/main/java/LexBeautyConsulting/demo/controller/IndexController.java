@@ -1,39 +1,37 @@
 package LexBeautyConsulting.demo.controller;
 
-import LexBeautyConsulting.demo.services.CategoriaService;
-import LexBeautyConsulting.demo.services.ProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
 
-    @Autowired
-    private CategoriaService categoriaService;
-
-    @Autowired
-    private ProductoService productoService;
-
-    @GetMapping({"/", "/index"})
-    public String index(Model model) {
-        var categorias = categoriaService.getCategorias(true);
-        var productos = productoService.getProductos(true);
-
-        model.addAttribute("productos", productos);
-        model.addAttribute("categorias", categorias);
-        // CARGAR CATEGORIAS Y PRODUCTOS EN EL INDEX
+    @GetMapping("/")
+    public String index(Model model, Authentication authentication) {
+        if (authentication != null) {
+            model.addAttribute("usuario", authentication.getName());
+            
+            // Obtener el rol del usuario
+            String rol = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("");
+            
+            model.addAttribute("rol", rol);
+        }
         return "index";
     }
-
-    @GetMapping("/nosotros")
-    public String nosotros() {
-        return "nosotros/listado";
+    
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
-
-    @GetMapping("/contacto")
-    public String contacto() {
-        return "contacto/listado";
+    
+    @GetMapping("/acceso-denegado")
+    public String accesoDenegado() {
+        return "acceso-denegado";
     }
 }

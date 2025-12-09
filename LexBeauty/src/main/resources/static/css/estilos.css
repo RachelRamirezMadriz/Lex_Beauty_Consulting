@@ -1,0 +1,101 @@
+/* Base */
+body {
+    background-color: #f4b6c3;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor general */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tarjeta del login */
+.login-card {
+    background-color: #ffffff;
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
+
+    width: 100%;
+    max-width: 420px;   /* ancho profesional */
+}
+
+/* Cabecera más compacta */
+.login-header {
+    background-color: #dba3ae;
+    color: #ffffff;
+    text-align: center;
+    padding: 1.8rem 1.5rem;
+
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+/* Ícono relacionado con belleza */
+.login-header i {
+    font-size: 3rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Cuerpo más compacto */
+.login-body {
+    padding: 1.8rem 2rem;
+}
+
+/* Labels */
+.form-label {
+    font-weight: 500;
+    color: #dba3ae;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #f4b6c3;
+    padding: 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #dba3ae;
+    box-shadow: 0 0 0 0.2rem rgba(219, 163, 174, 0.2);
+}
+
+/* Botón */
+.btn-login {
+    background-color: #dba3ae;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0.9rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-login:hover {
+    background-color: #f4b6c3;
+    color: #ffffff;
+}
+
+/* Alertas */
+.alert {
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+/* Texto de ayuda */
+.text-muted {
+    color: #dba3ae !important;
+}
+
+/* Badges */
+.badge {
+    background-color: #dba3ae !important;
+    color: #ffffff;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.4em 0.7em;
+}

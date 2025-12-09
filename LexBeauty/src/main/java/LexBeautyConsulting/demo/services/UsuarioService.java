@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.security.core.userdetails.User.withUsername;
@@ -25,6 +27,7 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -39,6 +42,24 @@ public class UsuarioService implements UserDetailsService {
                 .authorities(u.getRoles().getNombreRol())
                 .build();
     }
+
+
+    public List<Usuarios> getUsuarios(boolean soloActivos) {
+        return usuarioRepository.findAll();
+    }
+
+    public Optional<Usuarios> getUsuario(Integer idUsuario) {
+        return usuarioRepository.findById(idUsuario);
+    }
+
+    public void save(Usuarios usuario, MultipartFile imagenFile, boolean crear) {
+        usuarioRepository.save(usuario);
+    }
+
+    public void delete(Integer idUsuario) {
+        usuarioRepository.deleteById(idUsuario);
+    }
+
 
     @Transactional
     public void saveClientes(Usuarios u) {
