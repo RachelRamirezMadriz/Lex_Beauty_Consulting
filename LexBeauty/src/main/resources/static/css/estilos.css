@@ -99,3 +99,21 @@ body {
     border-radius: 8px;
     padding: 0.4em 0.7em;
 }
+
+.credentials-list {
+    display: inline-block;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.credentials-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.credentials-item .badge {
+    min-width: 80px;
+    text-align: center;
+    margin-right: 0.5rem;
+}

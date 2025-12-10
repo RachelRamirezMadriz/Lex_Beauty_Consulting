@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" th:href="@{/img/Logos/Favicon.png}">
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -34,8 +35,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contrasena</label>
-                        <input type="password" id="password" class="form-control" th:field="*{password}">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" id="password" class="form-control" th:field="*{password}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', 'eyeIcon')">
+                                <i class="bi bi-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                     </div>
 
@@ -52,6 +58,22 @@
 
 <!-- Footer -->
 <footer class="mt-auto" th:replace="~{general/fragmentos :: footer}"></footer>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        var input = document.getElementById(inputId);
+        var icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
+</script>
 
 </body>
 </html>
