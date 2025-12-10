@@ -4,7 +4,6 @@ import LexBeautyConsulting.demo.domain.Usuarios;
 import LexBeautyConsulting.demo.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +16,6 @@ public class RegistroController {
 
     @Autowired 
     private UsuarioService usuarioService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registro")
     public String mostrarFormulario(Model model) {
@@ -36,12 +32,11 @@ public class RegistroController {
             return "registro/listado";
         }
 
-        if (usuarioService.findByEmail(usuario.getEmail()) != null) {
+        if (usuarioService.findByEmail(usuario.getEmail()).isPresent()) {
             resultado.rejectValue("email", "email.existencia", "Este correo ya existe");
             return "registro/listado";
         }
 
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioService.saveClientes(usuario);
 
         return "redirect:/login";

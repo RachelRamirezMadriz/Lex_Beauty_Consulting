@@ -34,4 +34,14 @@ public class IndexController {
     public String accesoDenegado() {
         return "acceso-denegado";
     }
+
+    @GetMapping("/nosotros")
+    public String nosotros() {
+        return "nosotros/nosotros";
+    }
+
+    @GetMapping("/contacto")
+    public String contacto() {
+        return "contacto/listado";
+    }
 }

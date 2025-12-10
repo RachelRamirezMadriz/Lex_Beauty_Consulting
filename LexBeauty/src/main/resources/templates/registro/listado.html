@@ -22,9 +22,9 @@
 
                 <form th:action="@{/registro}" th:object="${usuario}" method="post">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" class="form-control" th:field="*{nombre}">
-                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
+                        <input type="text" id="nombreUsuario" class="form-control" th:field="*{nombreUsuario}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}"></div>
                     </div>
 
                     <div class="mb-3">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
+                        <label for="password" class="form-label">Contrasena</label>
                         <input type="password" id="password" class="form-control" th:field="*{password}">
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                     </div>
@@ -43,7 +43,7 @@
                 </form>
 
                 <p class="text-center mt-3">
-                    ¿Ya tienes cuenta? <a th:href="@{/login}">Iniciar sesión</a>
+                    Ya tienes cuenta? <a th:href="@{/login}">Iniciar sesion</a>
                 </p>
             </div>
         </div>
