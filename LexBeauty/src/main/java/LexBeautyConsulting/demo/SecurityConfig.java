@@ -24,9 +24,8 @@ public class SecurityConfig {
             requests.requestMatchers("/login", "/error", "/registro", "/nosotros", "/contacto").permitAll();
             requests.requestMatchers(HttpMethod.GET, "/").permitAll();
 
-            // Catálogos visibles para usuarios autenticados con  cualquier rol
-            requests.requestMatchers("/producto/disponibles", "/categoria/disponibles")
-                    .hasAnyAuthority("ROLE_USER", "ROLE_CLIENTE", "ROLE_VENDEDOR", "ROLE_ADMIN");
+            // Catálogos visibles para todos (solo lectura)
+            requests.requestMatchers(HttpMethod.GET, "/producto/disponibles", "/categoria/disponibles").permitAll();
 
             // Solo admin o vendedor
             requests.requestMatchers(HttpMethod.GET, "/producto/listado", "/categoria/listado")
