@@ -32,6 +32,14 @@ public class CategoriaController {
         model.addAttribute("totalCategorias", categorias.size());
         return "/categoria/listado";
     }
+
+    @GetMapping("/disponibles")
+    public String disponibles(Model model) {
+        var categorias = categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("totalCategorias", categorias.size());
+        return "/categoria/disponibles";
+    }
     
     @Autowired
     private MessageSource messageSource;

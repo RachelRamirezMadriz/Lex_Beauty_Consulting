@@ -37,6 +37,14 @@ public class ProductoController {
         model.addAttribute("categorias", categorias);
         return "producto/listado";
     }
+
+    @GetMapping("/disponibles")
+    public String disponibles(Model model) {
+        var productos = productoService.getProductos(true);
+        model.addAttribute("productos", productos);
+        model.addAttribute("totalProductos", productos.size());
+        return "producto/disponibles";
+    }
     
     //Obtener los mensajes de las properties anteriormente definidas
     @Autowired

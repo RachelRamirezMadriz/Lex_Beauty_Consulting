@@ -22,12 +22,21 @@ public class SecurityConfig {
 
             requests.requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/img/**", "/favicon.ico").permitAll();
             requests.requestMatchers("/login", "/error", "/registro", "/nosotros", "/contacto").permitAll();
-            requests.requestMatchers(HttpMethod.GET, "/", "/producto/listado", "/categoria/listado").permitAll();
+            requests.requestMatchers(HttpMethod.GET, "/").permitAll();
 
+            // Catálogos visibles para usuarios autenticados con  cualquier rol
+            requests.requestMatchers("/producto/disponibles", "/categoria/disponibles")
+                    .hasAnyAuthority("ROLE_USER", "ROLE_CLIENTE", "ROLE_VENDEDOR", "ROLE_ADMIN");
+
+            // Solo admin o vendedor
+            requests.requestMatchers(HttpMethod.GET, "/producto/listado", "/categoria/listado")
+                    .hasAnyAuthority("ROLE_ADMIN", "ROLE_VENDEDOR");
+            requests.requestMatchers("/producto/**", "/categoria/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_VENDEDOR");
             requests.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
             requests.requestMatchers("/usuario/**").hasAuthority("ROLE_ADMIN");
-            requests.requestMatchers("/producto/**", "/categoria/**").hasAuthority("ROLE_ADMIN");
-            requests.requestMatchers("/vendedor/**").hasAuthority("ROLE_CLIENTE");
+
+            // Compatibilidad con rutas de vendedor
+            requests.requestMatchers("/vendedor/**").hasAnyAuthority("ROLE_CLIENTE", "ROLE_VENDEDOR");
 
             requests.anyRequest().authenticated();
         });

@@ -31,7 +31,9 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Usuarios u = usuarioRepository.findByEmail(email).orElse(null);
+        Usuarios u = usuarioRepository.findByEmail(email)
+                .or(() -> usuarioRepository.findByNombreUsuario(email))
+                .orElse(null);
 
         if (u == null) {
             throw new UsernameNotFoundException("El correo electrónico " + email + " no existe en el sistema.");

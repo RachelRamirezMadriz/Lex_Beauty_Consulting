@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuarios, Integer> {
     @Nullable
-    public Optional<Usuarios> findByEmail(String email); // Optional maneja valores nulos, devuelve objeto Usuario si existe
+    public Optional<Usuarios> findByEmail(String email); // devuelve objeto Usuario si existe
+    @Nullable
+    public Optional<Usuarios> findByNombreUsuario(String nombreUsuario);
 
     public boolean existsByEmail(String email);
 }
