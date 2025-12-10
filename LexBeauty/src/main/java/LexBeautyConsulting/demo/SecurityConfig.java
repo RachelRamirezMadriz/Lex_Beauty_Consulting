@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 public class SecurityConfig {
@@ -19,19 +20,15 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(requests -> {
 
-            // Recursos públicos
-            requests.requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll();
-            requests.requestMatchers("/login", "/error", "/registro").permitAll();
+            requests.requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/img/**", "/favicon.ico").permitAll();
+            requests.requestMatchers("/login", "/error", "/registro", "/nosotros", "/contacto").permitAll();
+            requests.requestMatchers(HttpMethod.GET, "/", "/producto/listado", "/categoria/listado").permitAll();
 
-            // Rutas por rol
             requests.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+            requests.requestMatchers("/usuario/**").hasAuthority("ROLE_ADMIN");
+            requests.requestMatchers("/producto/**", "/categoria/**").hasAuthority("ROLE_ADMIN");
             requests.requestMatchers("/vendedor/**").hasAuthority("ROLE_CLIENTE");
-            requests.requestMatchers("/usuario/**").hasAuthority("ROLE_USER");
 
-            // Página principal
-            requests.requestMatchers("/").authenticated();
-
-            // Todo lo demás requiere login
             requests.anyRequest().authenticated();
         });
 
@@ -48,7 +45,7 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
         ).exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/acceso_denegado")
+                .accessDeniedPage("/acceso-denegado")
         ).sessionManagement(session -> session
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)

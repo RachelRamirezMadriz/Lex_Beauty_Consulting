@@ -83,4 +83,31 @@ public class UsuarioService implements UserDetailsService {
     public Optional<Usuarios> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
+
+    @Transactional
+    public void saveConRol(Usuarios usuario) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new IllegalStateException("El correo electrónico ya existe en el sistema.");
+        }
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void actualizarUsuario(Usuarios usuario) {
+        Optional<Usuarios> existente = usuarioRepository.findById(usuario.getIdUsuario());
+        if (existente.isEmpty()) {
+            throw new IllegalStateException("Usuario no encontrado.");
+        }
+
+        Usuarios usuarioActual = existente.get();
+
+        if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
+            usuario.setPassword(usuarioActual.getPassword());
+        } else {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+
+        usuarioRepository.save(usuario);
+    }
 }

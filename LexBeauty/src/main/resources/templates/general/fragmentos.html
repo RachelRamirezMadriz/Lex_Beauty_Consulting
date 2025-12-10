@@ -29,7 +29,17 @@
                             <li class="nav-item"><a class="nav-link" th:href="@{/producto/listado}">Productos</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/categoria/listado}">Categorías</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/nosotros}">Nosotros</a></li>
-                            <li class="nav-item"><a class="nav-link" th:href="@{/registro}">Registro</a></li>
+                            <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                <a class="nav-link" th:href="@{/admin/usuarios}">Usuarios</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAnonymous()">
+                                <a class="nav-link" th:href="@{/login}">Ingresar</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post" style="margin:0;">
+                                    <button type="submit" class="nav-link" style="background:none;border:none;cursor:pointer;">Salir</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
