@@ -57,6 +57,11 @@ public class CarritoService {
         productoRepository.save(producto);
     }
 
+    public void vaciarCarrito() {
+        carritoUsuario = new Carrito();
+        carritoUsuario.setDetalles(new ArrayList<>());
+    }
+
     // Actualizar cantidad de un detalle del carrito
     public void actualizarCantidad(Integer detalleId, int nuevaCantidad) {
         carritoUsuario.getDetalles().stream()

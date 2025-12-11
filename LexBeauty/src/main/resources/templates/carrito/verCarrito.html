@@ -13,6 +13,7 @@
 
         <div class="container py-5">
             <h2 class="mb-4">Mi Carrito</h2>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
             <div th:if="${carrito == null || #lists.isEmpty(carrito.detalles)}" class="alert alert-info">
                 Tu carrito está vacío.
@@ -66,7 +67,9 @@
                         <!-- Total -->
                         <span th:text="${'₡ ' + #numbers.formatDecimal(totalCarrito, 1, 'COMMA', 2, 'POINT')}"></span>
                     </h5>
-                    <a href="/finalizarCompra" class="btn btn-success">Finalizar Compra</a>
+                    <form th:action="@{/carrito/finalizar}" method="post" class="m-0">
+                        <button type="submit" class="btn btn-success">Finalizar Compra</button>
+                    </form>
                 </div>
             </div>
         </div>

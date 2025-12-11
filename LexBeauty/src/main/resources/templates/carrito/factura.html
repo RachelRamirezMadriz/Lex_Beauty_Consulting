@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Factura</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<div th:replace="~{general/fragmentos :: header}"></div>
+
+<div class="container py-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">Factura</h5>
+                <small th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}"></small>
+            </div>
+            <div class="text-end">
+                <span class="d-block fw-semibold">Pedido #</span>
+                <span class="fs-5" th:text="${pedido.idPedido}"></span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h6 class="fw-bold mb-2">Cliente</h6>
+                    <p class="mb-1" th:text="${usuario.nombreUsuario}">Nombre</p>
+                    <p class="mb-0 text-muted" th:text="${usuario.email}">Correo</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h6 class="fw-bold mb-2">Estado</h6>
+                    <span class="badge bg-secondary" th:text="${pedido.estado}">Pendiente</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-end">Precio</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="det : ${detalles}">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img th:src="@{${det.productos.rutaImagen}}" alt="Producto" class="me-3 rounded" style="width:50px;height:50px;object-fit:cover;">
+                                    <span th:text="${det.productos.nombreProducto}"></span>
+                                </div>
+                            </td>
+                            <td class="text-end" th:text="${'₡ ' + #numbers.formatDecimal(det.productos.precio, 1, 'COMMA', 2, 'POINT')}"></td>
+                            <td class="text-center" th:text="${det.cantidad}"></td>
+                            <td class="text-end"
+                                th:text="${'₡ ' + #numbers.formatDecimal(det.productos.precio.multiply(T(java.math.BigDecimal).valueOf(det.cantidad.doubleValue())), 1, 'COMMA', 2, 'POINT')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <div class="text-end">
+                    <p class="mb-1 fw-semibold">Total</p>
+                    <h4 class="text-success" th:text="${'₡ ' + #numbers.formatDecimal(totalCarrito, 1, 'COMMA', 2, 'POINT')}"></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light d-flex justify-content-end">
+            <a class="btn btn-outline-secondary" th:href="@{/}"><i class="fas fa-home me-1"></i> Volver al inicio</a>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-auto" th:replace="~{general/fragmentos :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

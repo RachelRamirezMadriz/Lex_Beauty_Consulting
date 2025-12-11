@@ -1,4 +1,4 @@
-package LexBeautyConsulting.demo.service;
+package LexBeautyConsulting.demo.services;
 
 import LexBeautyConsulting.demo.domain.Pedido;
 import LexBeautyConsulting.demo.repository.PedidoRepository;
