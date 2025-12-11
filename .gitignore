@@ -30,11 +30,6 @@ LexBeauty/src/main/resources/firebase/lexbeautyconsulting-e3929-firebase-adminsd
 
 firebase/
 
-###application.properties###
+### application.properties ###
 
-src/main/resources/application.properties
-
-###applicatio properties###
-
-src/main/resources/application.properties
-
+LexBeauty/src/main/resources/application.properties
