@@ -15,31 +15,31 @@
 <div class="container py-5">
 
     <!-- Filtros -->
-    <form class="row g-2 align-items-end mb-4" th:action="@{/producto/disponibles}" method="get">
-        <div class="col-md-5">
-            <label class="form-label small mb-1">Nombre</label>
-            <input type="text" class="form-control" name="nombre"
-                   placeholder="Buscar por nombre" th:value="${nombre}">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form class="row g-3 align-items-end" th:action="@{/producto/disponibles}" method="get">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Nombre</label>
+                    <input type="text" class="form-control" name="nombre"
+                           placeholder="Buscar por nombre" th:value="${nombre}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Precio Mínimo</label>
+                    <input type="number" class="form-control" name="precioMin"
+                           step="0.01" min="0" placeholder="0.00" th:value="${precioMin}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Precio Máximo</label>
+                    <input type="number" class="form-control" name="precioMax"
+                           step="0.01" min="0" placeholder="0.00" th:value="${precioMax}">
+                </div>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-dark w-100">Filtrar</button>
+                    <a class="btn btn-outline-secondary w-100" th:href="@{/producto/disponibles}">Limpiar</a>
+                </div>
+            </form>
         </div>
-        <div class="col-md-3">
-            <label class="form-label small mb-1">Precio mA-nimo</label>
-            <input type="number" class="form-control" name="precioMin"
-                   step="0.01" min="0" placeholder="0.00" th:value="${precioMin}">
-        </div>
-        <div class="col-md-3">
-            <label class="form-label small mb-1">Precio mA-ximo</label>
-            <input type="number" class="form-control" name="precioMax"
-                   step="0.01" min="0" placeholder="0.00" th:value="${precioMax}">
-        </div>
-        <div class="col-md-1 d-flex gap-2">
-            <button type="submit" class="btn btn-outline-dark w-100">
-                <i class="fas fa-filter"></i>
-            </button>
-        </div>
-        <div class="col-12">
-            <a class="btn btn-outline-secondary btn-sm" th:href="@{/producto/disponibles}">Limpiar filtros</a>
-        </div>
-    </form>
+    </div>
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
         <h2 class="fw-bold text-dark mb-0">Productos disponibles</h2>
         <small class="text-muted">Total: <span th:text="${totalProductos}"></span></small>
