@@ -22,7 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-LexBeauty/src/main/resources/firebase/lexbeautyconsulting-e3929-firebase-adminsdk-fbsvc-65bcbafa5f.json
+LexBeauty/src/main/resources/firebase/
 .idea
 .vscode
 

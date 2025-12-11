@@ -1,120 +1,125 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org"      
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:fragment="head">
-    <title>Lex Beauty Consulting</title>
-    <meta charset="UTF-8">
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
-    <link rel="icon" type="image/png" th:href="@{/img/Logos/Favicon.png}">
-</head>
-<body>
-<header th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-                <img th:src="@{/img/Logos/LogoPrincipal.jpg}" alt="Logo" width="50" class="me-2">
-                <span class="fw-bold text-primary">Lex Beauty Consulting</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a class="nav-link" th:href="@{/producto/listado}">Productos</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a class="nav-link" th:href="@{/producto/disponibles}">Productos</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a class="nav-link" th:href="@{/categoria/listado}">Categorias</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a class="nav-link" th:href="@{/categoria/disponibles}">Categorias</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/nosotros}">Nosotros</a></li>
-                    <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/admin/usuarios}">Usuarios</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                        <a class="nav-link" th:href="@{/login}">Ingresar</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <form th:action="@{/logout}" method="post" style="margin:0;">
-                            <button type="submit" class="nav-link" style="background:none;border:none;cursor:pointer;">Salir</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<footer th:fragment="footer" class="text-center text-lg-start text-white" style="background-color: #f4b6c2;">
-    <div class="container p-4">
-
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase fw-bold">Lex Beauty Consulting</h5>
-                <p>
-                    Todo para que resaltes tu belleza.<br>
-                    Compra facil, rapido y seguro con nosotros.
-                </p>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase fw-bold">Enlaces</h5>
-                <ul class="list-unstyled mb-0">
-                    <li><a th:href="@{/}" class="text-white text-decoration-none">Inicio</a></li>
-                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a th:href="@{/producto/listado}" class="text-white text-decoration-none">Productos</a>
-                    </li>
-                    <li sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a th:href="@{/producto/disponibles}" class="text-white text-decoration-none">Productos</a>
-                    </li>
-                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a th:href="@{/categoria/listado}" class="text-white text-decoration-none">Categorias</a>
-                    </li>
-                    <li sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
-                        <a th:href="@{/categoria/disponibles}" class="text-white text-decoration-none">Categorias</a>
-                    </li>
-                    <li><a th:href="@{/nosotros}" class="text-white text-decoration-none">Nosotros</a></li>
-                    <li><a th:href="@{/contacto}" class="text-white text-decoration-none">Contactanos</a></li>
-                </ul>
-            </div>
-
-            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase fw-bold">Siguenos</h5>
-                <div class="d-flex justify-content-center justify-content-lg-start mt-3 gap-3">
-                    <a href="https://www.facebook.com/" target="_blank" class="text-white fs-4">
-                        <i class="fab fa-facebook-f"></i>
+    <head th:fragment="head">
+        <title>Lex Beauty Consulting</title>
+        <meta charset="UTF-8">
+        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+        <link rel="icon" type="image/png" th:href="@{/img/Logos/Favicon.png}">
+    </head>
+    <body>
+        <header th:fragment="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                        <img th:src="@{/img/Logos/LogoPrincipal.jpg}" alt="Logo" width="50" class="me-2">
+                            <span class="fw-bold text-primary">Lex Beauty Consulting</span>
                     </a>
-                    <a href="https://www.instagram.com/" target="_blank" class="text-white fs-4">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/" target="_blank" class="text-white fs-4">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="https://wa.me/506XXXXXXXX" target="_blank" class="text-white fs-4">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="mailto:info@lexbeauty.com" class="text-white fs-4">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
+                            <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a class="nav-link" th:href="@{/producto/listado}">Productos</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a class="nav-link" th:href="@{/producto/disponibles}">Productos</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a class="nav-link" th:href="@{/categoria/listado}">Categorías</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a class="nav-link" th:href="@{/categoria/disponibles}">Categorías</a>
+                            </li>
+
+                            <li class="nav-item" sec:authorize="hasAuthority('ROLE_CLIENTE')">
+                                <a class="nav-link" th:href="@{/carrito/verCarrito}">Ver Carrito</a>
+                            </li>
+
+                            <li class="nav-item"><a class="nav-link" th:href="@{/nosotros}">Nosotros</a></li>
+                            <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                <a class="nav-link" th:href="@{/admin/usuarios}">Usuarios</a>
+                            </li>
+                            
+                            <li class="nav-item" sec:authorize="isAnonymous()">
+                                <a class="nav-link" th:href="@{/login}">Ingresar</a>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post" style="margin:0;">
+                                    <button type="submit" class="nav-link" style="background:none;border:none;cursor:pointer;">Salir</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <footer th:fragment="footer" class="text-center text-lg-start text-white" style="background-color: #f4b6c2;">
+            <div class="container p-4">
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase fw-bold">Lex Beauty Consulting</h5>
+                        <p>
+                            Todo para que resaltes tu belleza.<br>
+                                Compra fácil, rápido y seguro con nosotros.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase fw-bold">Enlaces</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><a th:href="@{/}" class="text-white text-decoration-none">Inicio</a></li>
+                            <li sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a th:href="@{/producto/listado}" class="text-white text-decoration-none">Productos</a>
+                            </li>
+                            <li sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a th:href="@{/producto/disponibles}" class="text-white text-decoration-none">Productos</a>
+                            </li>
+                            <li sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a th:href="@{/categoria/listado}" class="text-white text-decoration-none">Categorías</a>
+                            </li>
+                            <li sec:authorize="!hasAnyAuthority('ROLE_ADMIN','ROLE_VENDEDOR')">
+                                <a th:href="@{/categoria/disponibles}" class="text-white text-decoration-none">Categorías</a>
+                            </li>
+                            <li><a th:href="@{/nosotros}" class="text-white text-decoration-none">Nosotros</a></li>
+                            <li><a th:href="@{/contacto}" class="text-white text-decoration-none">Contáctanos</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                        <h5 class="text-uppercase fw-bold">Síguenos</h5>
+                        <div class="d-flex justify-content-center justify-content-lg-start mt-3 gap-3">
+                            <a href="https://www.facebook.com/" target="_blank" class="text-white fs-4">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/" target="_blank" class="text-white fs-4">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/" target="_blank" class="text-white fs-4">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="https://wa.me/506XXXXXXXX" target="_blank" class="text-white fs-4">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="mailto:info@lexbeauty.com" class="text-white fs-4">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="text-center p-3" style="background-color: rgba(0,0,0,0.1);">
-        Ac 2025 Lex Beauty Consulting | Todos los derechos reservados
-    </div>
-</footer>
-</body>
+            <div class="text-center p-3" style="background-color: rgba(0,0,0,0.1);">
+                © 2025 Lex Beauty Consulting | Todos los derechos reservados
+            </div>
+        </footer>
+    </body>
 </html>

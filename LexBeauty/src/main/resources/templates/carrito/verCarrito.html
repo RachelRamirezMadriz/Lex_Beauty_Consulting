@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mi Carrito</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{general/fragmentos :: header}"></div>
+
+<div class="container py-5">
+
+    <h2 class="mb-4">Mi Carrito</h2>
+
+    <!-- Mensaje si el carrito está vacío -->
+    <div th:if="${carrito == null || #lists.isEmpty(carrito.detalles)}" class="alert alert-info">
+        Tu carrito está vacío.
+    </div>
+
+    <!-- Tabla solo si hay detalles en el carrito -->
+    <table th:if="${carrito != null && !#lists.isEmpty(carrito.detalles)}" class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="det : ${carrito.detalles}">
+                <td th:text="${det.producto != null ? det.producto.nombreProducto : 'Producto no disponible'}"></td>
+                <td th:text="${det.cantidad != null ? det.cantidad : 0}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
