@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/carrito")
@@ -26,10 +28,24 @@ public class CarritoController {
     // Mostrar carrito
     @GetMapping("/verCarrito")
     public String verCarrito(Model model) {
-        Carrito carrito = carritoService.obtenerCarritoUsuario();
-        model.addAttribute("carrito", carrito);
-        return "carrito/verCarrito"; 
+    Carrito carrito = carritoService.obtenerCarritoUsuario();
+
+    if (carrito == null) {
+        carrito = new Carrito();
+        carrito.setDetalles(new ArrayList<>()); 
     }
+
+    // Calcula total seguro con BigDecimal
+    BigDecimal totalCarrito = carrito.getDetalles().stream()
+            .map(d -> d.getProductos().getPrecio().multiply(BigDecimal.valueOf(d.getCantidad())))
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    model.addAttribute("carrito", carrito);
+    model.addAttribute("totalCarrito", totalCarrito);
+
+    return "carrito/verCarrito";
+}
+
 
     // Actualizar cantidad de un detalle del carrito
     @PostMapping("/actualizar")

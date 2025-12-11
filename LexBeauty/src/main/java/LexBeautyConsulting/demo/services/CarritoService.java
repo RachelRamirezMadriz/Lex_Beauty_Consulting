@@ -33,39 +33,63 @@ public class CarritoService {
         Productos producto = obtenerProductoPorId(idProducto);
         if (producto == null) return;
 
-        // Verificar si el producto ya está en el carrito
+        if (producto.getStock() < cantidad) {
+            throw new RuntimeException("No hay suficiente stock para el producto: " + producto.getNombreProducto());
+        }
+
         Optional<CarritoDetalle> detalleExistente = carritoUsuario.getDetalles()
                 .stream()
                 .filter(d -> d.getProductos().getIdProducto().equals(producto.getIdProducto()))
                 .findFirst();
 
         if (detalleExistente.isPresent()) {
-            // Si ya existe, sumar la cantidad
             detalleExistente.get().setCantidad(detalleExistente.get().getCantidad() + cantidad);
         } else {
-            // Si no existe, crear un nuevo detalle
             CarritoDetalle nuevoDetalle = new CarritoDetalle();
-            nuevoDetalle.setIdDetalle(carritoUsuario.getDetalles().size() + 1); // ID simulado
+            nuevoDetalle.setIdDetalle(carritoUsuario.getDetalles().size() + 1); // ID simulado en memoria
             nuevoDetalle.setProductos(producto);
             nuevoDetalle.setCantidad(cantidad);
             carritoUsuario.getDetalles().add(nuevoDetalle);
         }
+
+        // Restar stock del producto
+        producto.setStock(producto.getStock() - cantidad);
+        productoRepository.save(producto);
     }
 
     // Actualizar cantidad de un detalle del carrito
-    public void actualizarCantidad(Integer detalleId, int cantidad) {
+    public void actualizarCantidad(Integer detalleId, int nuevaCantidad) {
         carritoUsuario.getDetalles().stream()
                 .filter(d -> d.getIdDetalle().equals(detalleId))
                 .findFirst()
-                .ifPresent(d -> d.setCantidad(cantidad));
+                .ifPresent(d -> {
+                    int diferencia = nuevaCantidad - d.getCantidad();
+                    Productos producto = d.getProductos();
+                    if (producto.getStock() < diferencia) {
+                        throw new RuntimeException("No hay suficiente stock para el producto: " + producto.getNombreProducto());
+                    }
+                    d.setCantidad(nuevaCantidad);
+                    producto.setStock(producto.getStock() - diferencia);
+                    productoRepository.save(producto);
+                });
     }
 
     // Eliminar detalle del carrito
     public void eliminarDetalle(Integer detalleId) {
-        carritoUsuario.getDetalles().removeIf(d -> d.getIdDetalle().equals(detalleId));
+        carritoUsuario.getDetalles().stream()
+                .filter(d -> d.getIdDetalle().equals(detalleId))
+                .findFirst()
+                .ifPresent(d -> {
+                    // Devolver stock al producto
+                    Productos producto = d.getProductos();
+                    producto.setStock(producto.getStock() + d.getCantidad());
+                    productoRepository.save(producto);
+
+                    carritoUsuario.getDetalles().remove(d);
+                });
     }
 
-    // Método privado para obtener un producto por su ID desde la base de datos
+    // Obtener producto desde BD
     private Productos obtenerProductoPorId(Long idProducto) {
         return productoRepository.findById(idProducto.intValue()).orElse(null);
     }
