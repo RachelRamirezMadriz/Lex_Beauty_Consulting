@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <tr th:each="det : ${carrito.detalles}">
-                <td th:text="${det.producto != null ? det.producto.nombreProducto : 'Producto no disponible'}"></td>
+                <td th:text="${det.productos != null ? det.productos.nombreProducto : 'Producto no disponible'}"></td>
                 <td th:text="${det.cantidad != null ? det.cantidad : 0}"></td>
             </tr>
         </tbody>
