@@ -68,9 +68,23 @@ public class CategoriaService {
             throw new IllegalStateException ("No es posible eliminar esta categoria ya que cuenta con datos asociados", e);
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Categorias> buscarCategorias(String nombre, boolean soloActivas) {
+        boolean tieneNombre = nombre != null && !nombre.isBlank();
+
+        List<Categorias> categorias = tieneNombre
+                ? categoriaRepository.findByNombreCategoriaContainingIgnoreCase(nombre.trim())
+                : categoriaRepository.findAll();
+
+        if (soloActivas) {
+            categorias = categorias.stream().filter(Categorias::isActivo).toList();
+        }
+
+        return categorias;
+    }
 }
 
     
     
-
 

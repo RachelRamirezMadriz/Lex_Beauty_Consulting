@@ -16,6 +16,22 @@
 
 <div class="container py-5">
 
+    <!-- Filtro por nombre -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form class="row g-3 align-items-end" th:action="@{/categoria/listado}" method="get">
+                <div class="col-md-8">
+                    <label class="form-label fw-semibold">Nombre</label>
+                    <input type="text" class="form-control" name="nombre"
+                           placeholder="Buscar categoría" th:value="${nombre}">
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-outline-secondary w-100" th:href="@{/categoria/listado}">Limpiar Filtros</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Título y botón -->
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
         <h2 class="fw-bold text-dark mb-0">Gestión de Categorías</h2>

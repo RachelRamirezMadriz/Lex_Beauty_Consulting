@@ -35,7 +35,7 @@
                                 <img th:src="@{${det.productos.rutaImagen}}" alt="Producto" class="me-3" style="width:60px; height:60px; object-fit:cover;">
                                 <span th:text="${det.productos.nombreProducto}"></span>
                             </td>
-                            <td th:text="${#numbers.formatCurrency(det.productos.precio)}"></td>
+                            <td th:text="${'₡ ' + #numbers.formatDecimal(det.productos.precio, 1, 'COMMA', 2, 'POINT')}"></td>
                             <td>
                                 <div class="input-group input-group-sm" style="width:100px;">
                                     <button class="btn btn-outline-secondary" type="button"
@@ -47,7 +47,7 @@
                                 </div>
                             </td>
                             <!-- Subtotal-->
-                            <<td th:text="${#numbers.formatCurrency(det.productos.precio.multiply(T(java.math.BigDecimal).valueOf(det.cantidad.doubleValue())))}"></td>
+                            <td th:text="${'₡ ' + #numbers.formatDecimal(det.productos.precio.multiply(T(java.math.BigDecimal).valueOf(det.cantidad.doubleValue())), 1, 'COMMA', 2, 'POINT')}"></td>
 
 
 
@@ -64,7 +64,7 @@
                 <div class="d-flex justify-content-end align-items-center mt-4">
                     <h5 class="me-4">Total: 
                         <!-- Total -->
-                        <span th:text="${#numbers.formatCurrency(totalCarrito)}"></span>
+                        <span th:text="${'₡ ' + #numbers.formatDecimal(totalCarrito, 1, 'COMMA', 2, 'POINT')}"></span>
                     </h5>
                     <a href="/finalizarCompra" class="btn btn-success">Finalizar Compra</a>
                 </div>

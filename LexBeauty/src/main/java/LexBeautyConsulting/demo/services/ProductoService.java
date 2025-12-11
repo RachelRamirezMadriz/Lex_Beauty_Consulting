@@ -3,6 +3,7 @@ package LexBeautyConsulting.demo.services;
 import LexBeautyConsulting.demo.domain.Productos;
 import LexBeautyConsulting.demo.repository.ProductoRepository;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,5 +67,42 @@ public class ProductoService {
         }
     }
     
-    //Realizar aqui las consultas derivadas mas adelante
+    @Transactional(readOnly = true)
+    public List<Productos> buscarProductos(String nombre, BigDecimal precioMin, BigDecimal precioMax, boolean soloActivos) {
+        boolean tieneNombre = nombre != null && !nombre.isBlank();
+        boolean tienePrecio = precioMin != null || precioMax != null;
+
+        List<Productos> productos;
+
+        if (tieneNombre && tienePrecio) {
+            BigDecimal min = precioMin != null ? precioMin : BigDecimal.ZERO;
+            BigDecimal max = precioMax != null ? precioMax : BigDecimal.valueOf(999_999_999);
+            if (max.compareTo(min) < 0) {
+                BigDecimal tmp = min;
+                min = max;
+                max = tmp;
+            }
+            productos = productoRepository.findByNombreProductoContainingIgnoreCaseAndPrecioBetween(
+                    nombre.trim(), min, max);
+        } else if (tieneNombre) {
+            productos = productoRepository.findByNombreProductoContainingIgnoreCase(nombre.trim());
+        } else if (tienePrecio) {
+            BigDecimal min = precioMin != null ? precioMin : BigDecimal.ZERO;
+            BigDecimal max = precioMax != null ? precioMax : BigDecimal.valueOf(999_999_999);
+            if (max.compareTo(min) < 0) {
+                BigDecimal tmp = min;
+                min = max;
+                max = tmp;
+            }
+            productos = productoRepository.findByPrecioBetween(min, max);
+        } else {
+            productos = productoRepository.findAll();
+        }
+
+        if (soloActivos) {
+            productos = productos.stream().filter(Productos::isActivo).toList();
+        }
+
+        return productos;
+    }
 }

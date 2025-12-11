@@ -16,6 +16,32 @@
 
 <div class="container py-5">
 
+    <!-- Filtros -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form class="row g-3 align-items-end" th:action="@{/producto/listado}" method="get">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Nombre</label>
+                    <input type="text" class="form-control" name="nombre"
+                           placeholder="Buscar por nombre" th:value="${nombre}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Precio Mínimo</label>
+                    <input type="number" class="form-control" name="precioMin"
+                           step="0.01" min="0" placeholder="0.00" th:value="${precioMin}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Precio Máximo</label>
+                    <input type="number" class="form-control" name="precioMax"
+                           step="0.01" min="0" placeholder="0.00" th:value="${precioMax}">
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-outline-secondary w-100" th:href="@{/producto/listado}">Limpiar Filtros</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Título y botón -->
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
         <h2 class="fw-bold text-dark mb-0">Gestión de Productos</h2>
@@ -60,7 +86,7 @@
                         </span>
                         <span th:if="${prod.categoria == null}" class="text-muted small">Sin categoría</span>
                     </td>
-                    <td class="fw-bold text-success" th:text="${#numbers.formatCurrency(prod.precio)}"></td>
+                    <td class="fw-bold text-success" th:text="${'₡ ' + #numbers.formatDecimal(prod.precio, 1, 'COMMA', 2, 'POINT')}"></td>
                     <td>
                         <span th:classappend="${prod.stock > 0} ? 'text-success' : 'text-danger'" class="fw-bold">
                             <span th:text="${prod.stock}"></span>

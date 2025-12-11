@@ -26,18 +26,20 @@ public class CategoriaController {
     private CategoriaService categoriaService;
     
     @GetMapping("/listado")
-    public String listado(Model model) {
-        var categorias = categoriaService.getCategorias(false);
+    public String listado(@RequestParam(required = false) String nombre, Model model) {
+        var categorias = categoriaService.buscarCategorias(nombre, false);
         model.addAttribute("categorias", categorias);
         model.addAttribute("totalCategorias", categorias.size());
+        model.addAttribute("nombre", nombre);
         return "/categoria/listado";
     }
 
     @GetMapping("/disponibles")
-    public String disponibles(Model model) {
-        var categorias = categoriaService.getCategorias(true);
+    public String disponibles(@RequestParam(required = false) String nombre, Model model) {
+        var categorias = categoriaService.buscarCategorias(nombre, true);
         model.addAttribute("categorias", categorias);
         model.addAttribute("totalCategorias", categorias.size());
+        model.addAttribute("nombre", nombre);
         return "/categoria/disponibles";
     }
     

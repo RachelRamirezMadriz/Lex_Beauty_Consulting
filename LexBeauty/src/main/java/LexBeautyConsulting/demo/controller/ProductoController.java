@@ -4,6 +4,7 @@ import LexBeautyConsulting.demo.domain.Productos;
 import LexBeautyConsulting.demo.services.CategoriaService;
 import LexBeautyConsulting.demo.services.ProductoService;
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,32 @@ public class ProductoController {
     private CategoriaService categoriaService;
     
     @GetMapping("/listado")
-    public String listado(Model model) {
-       var productos = productoService.getProductos(false);
+    public String listado(@RequestParam(required = false) String nombre,
+            @RequestParam(required = false) BigDecimal precioMin,
+            @RequestParam(required = false) BigDecimal precioMax,
+            Model model) {
+       var productos = productoService.buscarProductos(nombre, precioMin, precioMax, false);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("nombre", nombre);
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
         var categorias = categoriaService.getCategorias(true);
         model.addAttribute("categorias", categorias);
         return "producto/listado";
     }
 
     @GetMapping("/disponibles")
-    public String disponibles(Model model) {
-        var productos = productoService.getProductos(true);
+    public String disponibles(@RequestParam(required = false) String nombre,
+            @RequestParam(required = false) BigDecimal precioMin,
+            @RequestParam(required = false) BigDecimal precioMax,
+            Model model) {
+        var productos = productoService.buscarProductos(nombre, precioMin, precioMax, true);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
+        model.addAttribute("nombre", nombre);
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
         return "producto/disponibles";
     }
     
