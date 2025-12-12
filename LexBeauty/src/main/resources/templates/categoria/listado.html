@@ -16,7 +16,15 @@
 
 <div class="container py-5">
 
-    <!-- Filtro por nombre -->
+    <div th:if="${todoOk}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i><span th:text="${todoOk}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i><span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <form class="row g-3 align-items-end" th:action="@{/categoria/listado}" method="get">

@@ -83,21 +83,27 @@ public class AdminController {
     }
 
     @PostMapping("/usuarios/actualizar")
-    public String actualizarUsuario(@Valid @ModelAttribute("usuario") Usuarios usuario,
-                                     BindingResult result,
+    public String actualizarUsuario(@ModelAttribute("usuario") Usuarios usuario,
                                      @RequestParam("idRol") Integer idRol,
+                                     @RequestParam(value = "password", required = false) String password,
                                      Model model,
                                      RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("roles", rolRepository.findAll());
-            return "admin/modifica";
-        }
-
         try {
             Roles rol = rolRepository.findById(idRol).orElse(null);
             if (rol != null) {
                 usuario.setRoles(rol);
             }
+            
+            // Manejar password vacío
+            Optional<Usuarios> existente = usuarioService.getUsuario(usuario.getIdUsuario());
+            if (existente.isPresent()) {
+                if (password == null || password.isEmpty()) {
+                    usuario.setPassword(existente.get().getPassword());
+                } else {
+                    usuario.setPassword(password);
+                }
+            }
+            
             usuarioService.actualizarUsuario(usuario);
             redirectAttributes.addFlashAttribute("mensaje", "Usuario actualizado correctamente");
         } catch (Exception e) {

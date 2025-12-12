@@ -80,13 +80,13 @@ public class ProductoController {
             productoService.delete(idProducto);
         }catch(IllegalArgumentException e){
             titulo = "error";
-            detalle = "categoria.error01";
+            detalle = "producto.error01";
         }catch (IllegalStateException e) {
             titulo = "error";
-            detalle = "categoria.error02";
+            detalle = "producto.error02";
         }catch (Exception e) {
             titulo = "error";
-            detalle = "categoria.error03";
+            detalle = "producto.error03";
         }
         redirectAttributes.addFlashAttribute(titulo, messageSource.getMessage(detalle, null, Locale.getDefault()));
         return "redirect:/producto/listado";
