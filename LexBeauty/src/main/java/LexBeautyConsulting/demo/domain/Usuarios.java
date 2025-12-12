@@ -22,7 +22,6 @@ public class Usuarios implements Serializable {
     @NotBlank(message = "El nombre de usuario no puede estar vacío.")
     @Size(max = 100, message = "El nombre de usuario no puede tener más de 100 caracteres.")
     private String nombreUsuario;
-//     PENDIENTE MOSTRAR MSG SI EL USERNAME YA EXISTE
 
     @Column(nullable=false, length=100, unique=true, name = "correo")
     @Email(message = "Correo electrónico inválido.")
