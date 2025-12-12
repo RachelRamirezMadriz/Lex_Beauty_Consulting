@@ -93,4 +93,9 @@ public class CarritoService {
     private Productos obtenerProductoPorId(Long idProducto) {
         return productoRepository.findById(idProducto.intValue()).orElse(null);
     }
+    
+    public void vaciarCarrito() {
+    carritoUsuario.getDetalles().clear();
+}
+
 }
